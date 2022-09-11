@@ -1,4 +1,4 @@
-
+import { useState } from 'react';
 
 import './styles/App.css';
 import './styles/PostForm.css';
@@ -11,18 +11,33 @@ import emptyFolderIcon from './images/empty-folder.svg'
 
 
 export default function App() {
-    const posts = [
-        { //vai gerar um Id aleatório 
+    const [posts, setPost] = useState ([
+
+        { // Math.random vai gerar um Id aleatório 
             id: Math.random(),
             content: 'Contéudo de post',
             userName: 'Samuel',
             publishedAt: new Date(),
         },
-    ];
+    ]);
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+      setPost([
+        ...posts,
+        {
+            id: Math.random(),
+            content: `Conteudo do Post ${Math.random()}`,
+            userName: 'Samuel',
+            publishedAt: new Date(),
+        }
+      ])
+    }
 
     return (
         <div className="wrapper">
-            <form className="post-form" onSubmit={() => alert('Formulário submetido')}>
+            <form className="post-form" onSubmit={handleSubmit}>
                 <input placeholder='Escreva uma nova Historia...' />
 
                 <div>
@@ -48,37 +63,37 @@ export default function App() {
                     </h2>
                 </div> : null}
 
-                {posts.length > 0 && 
-                <>
-                    <header>
+                {posts.length > 0 &&
+                    <>
+                        <header>
                             <h1>Seu Feed</h1>
                             <h2>
                                 Acompanhe oque seus amigos estão pensado em tempo real
                             </h2>
-                     </header>
-                    
-                    <section className='feed'>
-                        {posts.map((posts) => (
-                            <article key={posts.id}>
-                                <p>
-                                    {posts.content}
-                                </p>
-                                <footer>
-                                    <div className='user-details'>
-                                        <img src={userIcon} alt='User' />
-                                        <strong>{posts.userName}</strong>
-                                    </div>
-                                    <div className='time'>
-                                        <img src={clockIcon} alt='Clock' />
-                                        <span>
-                                            Publicado em {posts.publishedAt.toLocaleDateString('pt-br')}
-                                        </span>
-                                    </div>
-                                </footer>
-                            </article>
-                        ))}
-                    </section>
-                </>
+                        </header>
+
+                        <section className='feed'>
+                            {posts.map((posts) => (
+                                <article key={posts.id}>
+                                    <p>
+                                        {posts.content}
+                                    </p>
+                                    <footer>
+                                        <div className='user-details'>
+                                            <img src={userIcon} alt='User' />
+                                            <strong>{posts.userName}</strong>
+                                        </div>
+                                        <div className='time'>
+                                            <img src={clockIcon} alt='Clock' />
+                                            <span>
+                                                Publicado em {posts.publishedAt.toLocaleDateString('pt-br')}
+                                            </span>
+                                        </div>
+                                    </footer>
+                                </article>
+                            ))}
+                        </section>
+                    </>
                 }
             </main >
         </div >
