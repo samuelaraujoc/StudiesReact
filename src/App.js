@@ -1,35 +1,23 @@
-import { useState } from 'react';
+import { BrowserRouter, Link } from 'react-router-dom';
 
 import './styles/App.css';
 
-import Feed from './componentes/Feed';
-import PostForm from './componentes/PostForm';
+import AppRoutes from './Router';
 
 export default function App() {
-    const [posts, setPosts] = useState([]);
 
-    function handleSubmit({ history, userName }) {
-        setPosts([
-            ...posts,
-            {
-                id: Math.random(),
-                content: history,
-                userName,
-                publishedAt: new Date(),
-            },
-        ]);
-
-
-    }
 
     return (
         <div className="wrapper">
+            <BrowserRouter>
 
-            <PostForm onSubmit={handleSubmit} />
+                <nav>
+                    <Link to='/'> Meu feed</Link>
+                    <Link to='/most-viewed'> Mais vistos</Link>
+                </nav>
 
-            <main>
-                <Feed posts={posts} />
-            </main >
+                <AppRoutes />
+            </BrowserRouter>
         </div >
     );
 }
